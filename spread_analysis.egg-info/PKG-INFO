@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: spread-analysis
+Version: 0.0.1
+Summary: Collect data and referals based on links. Analyse spread of links.
+Home-page: UNKNOWN
+Author: Jakob
+Author-email: jakob@ogtal.dk
+License: UNKNOWN
+Description: # link_collector
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

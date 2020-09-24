@@ -42,3 +42,11 @@ def determine_platform_type(type_id):
         elif type_id == 11: type = "reddit"
 
     return type
+
+def random_wait(between=(1,3)):
+
+	thoughtful_human = 0.0
+	if random.randint(1,100) > 94:
+		thoughtful_human = float(random.randint(1,37))
+	secs = float(random.randint(between[0],int(between[1]-1))+round(float(random.random()),3))+thoughtful_human
+	time.sleep(secs)

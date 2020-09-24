@@ -1,0 +1,6 @@
+pandas
+selenium
+numpy
+TwitterAPI
+beautifulsoup4
+langdetect

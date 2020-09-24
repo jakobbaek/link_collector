@@ -6,11 +6,11 @@ import os
 import random
 from operator import itemgetter
 import sys
-import helpers as hlp
 
-from links import LinkUtils
-from twitter import Twitter
-from crowdtangle import Crowdtangle
+import referals.utils.helpers as hlp
+from referals.utils.links import LinkUtils
+from referals.platforms.twitter import Twitter
+from referals.platforms.crowdtangle import Crowdtangle
 
 class Collector:
 

@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import signal
 import timeout_decorator
 from timeout_decorator import TimeoutError
-from scraper import Scraper, USER_AGENTS
+from referals.scraper.scraper import Scraper, USER_AGENTS
 
 COMMON_SHORTERNERS = set(["http://bit.ly/","https://bit.ly/","http://tinyurl.com/","https://tinyurl.com/",
                         "http://goo.gl/","https://goo.gl/","https://t.co/","http://t.co/"])

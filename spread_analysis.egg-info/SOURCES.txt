@@ -1,0 +1,7 @@
+README.md
+setup.py
+spread_analysis.egg-info/PKG-INFO
+spread_analysis.egg-info/SOURCES.txt
+spread_analysis.egg-info/dependency_links.txt
+spread_analysis.egg-info/requires.txt
+spread_analysis.egg-info/top_level.txt

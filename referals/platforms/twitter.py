@@ -9,8 +9,8 @@ import sys
 from urllib.error import HTTPError
 from requests_oauthlib import OAuth1
 from _csv import reader
-from scraper import TweetScraper
-import helpers as hlp
+from referals.scraper.scraper import TweetScraper
+import referals.utils.helpers as hlp
 
 class Twitter:
 

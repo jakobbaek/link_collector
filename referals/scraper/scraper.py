@@ -21,7 +21,7 @@ USER_AGENTS = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KH
                 "Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36",
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9",
                 "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36",
-                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"]
+                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1","Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:80.0) Gecko/20100101 Firefox/80.0"]
 
 class Scraper:
 
@@ -37,12 +37,13 @@ class Scraper:
         for setting, value in settings.items():
             if "change_user_agent" in setting: self.change_user_agent = value
 
-    def browser_init(self):
+    def browser_init(self,user_agent=""):
 
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
         options.add_argument(" - incognito")
-        #options.add_argument('--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"')
+        if user_agent != "":
+            options.add_argument('--user-agent="{0}"'.format(user_agent))
         if self.change_user_agent:
             options.add_argument(f'--user-agent="{random.choice(USER_AGENTS)}"')
         self.browser = webdriver.Chrome(executable_path="/usr/bin/chromedriver", chrome_options=options)
@@ -253,3 +254,34 @@ class TweetScraper(Scraper):
                     self.dump_tempsave(save_specific=query)
             self.browser.quit()
             return self.format_tweet_ids_data(format,query_list)
+
+
+class FacebookScraper(Scraper):
+
+    def __init__(self,settings={}):
+        Scraper.__init__(self,settings=settings)
+
+        self.BASE_URL = "https://www.facebook.com/"
+
+    def _go_to_url(self,url):
+
+        try:
+            self.browser.get(url)
+            hlp.random_wait(between=(1,3))
+        except Exception as e:
+            print (e)
+
+    def fb_login(self,user=None,pwd=None):
+        if user is None:
+            user = self.settings["user"]
+            pwd = self.settings["pwd"]
+        self.browser.implicitly_wait(2)
+        self.browser.get(self.BASE_URL)
+        self.browser.find_element_by_xpath('//*[@id="email"]').send_keys((Keys.BACKSPACE*30), str(user))
+        self.browser.find_element_by_xpath('//*[@id="pass"]').send_keys((Keys.BACKSPACE*30), str(pwd))
+        hlp.random_wait()
+        self.browser.find_element_by_id("u_0_d").click()
+        html = self.browser.page_source
+        if "Incorrect Email/Password Combination" in html:
+            sys.exit ("[!] Incorrect Facebook username (email address) or password")
+        hlp.random_wait(between=(1,2))
